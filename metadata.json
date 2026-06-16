@@ -1,0 +1,6 @@
+{
+  "name": "Liquid Glass Hero Section",
+  "description": "A dark cinematic single-page hero section featuring liquid glass UI elements and a full-screen looping background video.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

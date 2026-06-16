@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Bundle Baaz</title>
+    <script>
+      // Fetch Shield: Prevents third-party or library scripts from crashing when attempting to overwrite window.fetch
+      (function() {
+        try {
+          var originalFetch = window.fetch || (typeof fetch !== 'undefined' ? fetch : undefined);
+          var currentFetch = originalFetch;
+
+          var defineSafeFetch = function(obj) {
+            try {
+              Object.defineProperty(obj, 'fetch', {
+                get: function() {
+                  return currentFetch;
+                },
+                set: function(val) {
+                  currentFetch = val;
+                },
+                configurable: true,
+                enumerable: true
+              });
+            } catch (err) {
+              // If the property is completely sealed (non-configurable), we'll gracefully ignore it
+            }
+          };
+
+          if (typeof window !== 'undefined') defineSafeFetch(window);
+          if (typeof globalThis !== 'undefined') defineSafeFetch(globalThis);
+        } catch (e) {
+          console.warn("[Fetch Shield] Setup bypassed:", e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
